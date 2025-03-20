@@ -29,7 +29,6 @@ export async function loadSheet() {
 
 export async function getItems() {
   const sheet = await loadSheet();
-  console.log("Dohvaćeni podaci iz Google Sheeta:", sheet);
   if (!sheet) return [];
 
   const rows = await sheet.getRows();

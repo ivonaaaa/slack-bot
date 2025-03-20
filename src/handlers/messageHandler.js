@@ -14,7 +14,7 @@ export async function handleMessage(message, say) {
   const fuzzySet = FuzzySet(names);
 
   const matches = fuzzySet.get(text);
-  if (!matches) {
+  if (!matches || matches.length === 0) {
     say(`No results found for _${text}_`);
     return;
   }
@@ -22,5 +22,6 @@ export async function handleMessage(message, say) {
   const bestMatch = matches[0][1];
   const item = items.find((i) => i.name === bestMatch);
 
-  say(`*${item.name}* is located at: *${item.location}*`);
+  if (item) say(`*${item.name}* is located at: *${item.location}*`);
+  else say(`No matching item found for _${text}_`);
 }
