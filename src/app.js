@@ -1,6 +1,7 @@
 import bolt from "@slack/bolt";
 import config from "./config/config.js";
 import { handleMessage } from "./handlers/messageHandler.js";
+import { greet } from "./utils/greeter.js";
 
 const { App } = bolt;
 
@@ -10,6 +11,10 @@ const app = new App({
   socketMode: true,
   appToken: config.slackAppToken,
   port: config.port,
+});
+
+app.event("app_home_opened", async ({ event, client }) => {
+  await greet(client, event.user);
 });
 
 app.message(async ({ message, say }) => {

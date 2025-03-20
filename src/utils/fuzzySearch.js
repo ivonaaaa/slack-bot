@@ -4,10 +4,7 @@ export function extractBestMatch(text, items) {
   const names = items.map((item) => item.name);
   const fuzzySet = FuzzySet(names);
 
-  const words = text
-    .toLowerCase()
-    .replace(/[^a-zćčđšž ]/g, "")
-    .split(" ");
+  const words = text.replace(/[^a-zćčđšž ]/g, "").split(" ");
 
   let bestMatch = null;
   let highestScore = 0;
