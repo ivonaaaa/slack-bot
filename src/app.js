@@ -13,13 +13,7 @@ const app = new App({
 });
 
 app.message(async ({ message, say }) => {
-  if (message.im) await say(`Hello <@${message.user}>, I received your DM!`);
-
   await handleMessage(message, say);
-});
-
-app.message("hello", async ({ message, say }) => {
-  await say(`Hey there <@${message.user}>!`);
 });
 
 (async () => {

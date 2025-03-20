@@ -1,27 +1,15 @@
 import { getItems } from "../services/sheetsService.js";
-import FuzzySet from "fuzzyset";
+import { extractBestMatch } from "../utils/fuzzySearch.js";
 
 export async function handleMessage(message, say) {
-  const text = message.text.toLowerCase();
-
-  if (text === "refresh") {
-    say("Cache refreshed!");
-    return;
-  }
-
   const items = await getItems();
-  const names = items.map((item) => item.name);
-  const fuzzySet = FuzzySet(names);
+  const bestMatch = extractBestMatch(message.text, items);
 
-  const matches = fuzzySet.get(text);
-  if (!matches || matches.length === 0) {
-    say(`No results found for _${text}_`);
+  if (!bestMatch) {
+    say(`No results found for _${filteredText}_`);
     return;
   }
 
-  const bestMatch = matches[0][1];
   const item = items.find((i) => i.name === bestMatch);
-
-  if (item) say(`*${item.name}* is located at: *${item.location}*`);
-  else say(`No matching item found for _${text}_`);
+  say(`*${item.name}* is located at: *${item.location}*`);
 }
