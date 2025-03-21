@@ -13,7 +13,7 @@ export async function handleMessage(message, say) {
   }
 
   if (!bestMatch) {
-    say(`No results found for _${filteredText}_`);
+    say(`Sorry! No results found for _${text}_.`);
     return;
   }
 
